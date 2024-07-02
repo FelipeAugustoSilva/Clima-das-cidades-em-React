@@ -9,16 +9,30 @@ import {Titulo} from "./AppStyles";
 
 function App() {
   
+  const apiKey = import.meta.env.VITE_API_KEY || "";
+
   const [cidade, setCidade] = useState("");
   const [clima, setClima] = useState(null);
   const [previsao, setPrevisao] = useState([]);
+
+  const buscarClima = async () => {
+    try {
+      const respostaClima = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}`
+      );
+
+      setClima(respostaClima.data);
+    } catch (error) {
+      console.log("Erro ao buscar clima: ", error);
+    }
+  };
 
   return (
     <>
       <div>
         <Titulo>Condição Climáticas</Titulo>
 
-        <Busca />
+        <Busca cidade={cidade} setCidade={setCidade} buscarClima={buscarClima}/>
         <ClimaAtual />
         <Previsao />
       </div>
