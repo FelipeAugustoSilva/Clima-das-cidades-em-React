@@ -1,17 +1,23 @@
-import React from 'react'
+import React from "react";
+import { PrevisaoContainer } from "./PrevisaoStyles";
 
-const Previsao = () => {
+const Previsao = ({ previsoes }) => {
   return (
-    <div>
-        <h4>Previsão para as proximas horas</h4>
-        <ul>
-            <li>
-                <img src="" alt="" />
-                °C - descrição
-            </li>
-        </ul>
-    </div>
-  )
-}
+    <PrevisaoContainer>
+      <h4>Previsão para as próximas horas</h4>
+      <ul>
+        {previsoes.map((previsao, index) => (
+          <li key={index}>
+            <img
+              src={`http://openweathermap.org/img/wn/${previsao.weather[0].icon}.png`}
+              alt={previsao.weather[0].description}
+            />
+            {previsao.main.temp}°C - {previsao.weather[0].description}
+          </li>
+        ))}
+      </ul>
+    </PrevisaoContainer>
+  );
+};
 
-export default Previsao
+export default Previsao;
